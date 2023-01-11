@@ -10,7 +10,7 @@ import SwiftUI
 struct ContentView: View {
     private let lightIsOn: CGFloat = 1
     private let lightIsOff: CGFloat = 0.3
-    @State var title: String = "NEXT"
+    
     var body: some View {
         
         ZStack{
@@ -49,11 +49,10 @@ struct ContentView: View {
                         .padding()
                         .background(
                             Color.blue
-                            .cornerRadius(15)
+                                .cornerRadius(15)
                         )
-                    }
-                
                 }
+            }
         }
     }
     //                func startButtonPressed() {
