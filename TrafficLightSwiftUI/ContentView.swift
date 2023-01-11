@@ -8,8 +8,13 @@
 import SwiftUI
 
 struct ContentView: View {
-    private let lightIsOn: CGFloat = 1
-    private let lightIsOff: CGFloat = 0.3
+ @State private var lightIsOn = 1
+ @State private var lightIsOff = 0.3
+    
+enum CurrentLight {
+        case red, yellow, green
+    }
+ @State var currentLight = CurrentLight.red
     
     var body: some View {
         
@@ -41,8 +46,11 @@ struct ContentView: View {
                 .padding()
                 Spacer()
                 
-                Button(action: { print("hi")}) {
-                    Text("START".uppercased())
+                
+                Button(action: {} ) {
+                    
+                    Text("START")
+                    
                         .font(.title)
                         .foregroundColor(.white)
                         .padding(.horizontal, 20)
@@ -52,37 +60,44 @@ struct ContentView: View {
                                 .blue
                                 .cornerRadius(15)
                         )
+                        .overlay(RoundedRectangle(cornerRadius: 15).stroke(Color.white, lineWidth: 4))
+                    
                 }
+                
             }
         }
     }
-}
+//    if startButton.currentTitle == "START" {
+//        startButton.setTitle("NEXT", for: .normal)
+//    }
 //    func startButtonPressed() {
-//        if Text == "START" {
-//            startButton.setTitle("NEXT", for: .normal)
+//        if self. == "START" {
+//            Text("NEXT")
+//
 //        }
 //
-//    }
-//                enum CurrentLight {
-//                    case red, yellow, green
-//                }
+//            if startButton.currentTitle == "START" {
+//                startButton.setTitle("NEXT", for: .normal)
 //
-//                switch currentLight {
-//                case .red:
-//                    .opacity(lightIsOff)
-//                    redLight.alpha = lightIsOn
-//                    currentLight = .yellow
-//                case .yellow:
-//                    redLight.alpha = lightIsOff
-//                    yellowLight.alpha = lightIsOn
-//                    currentLight = .green
-//                case .green:
-//                    greenLight.alpha = lightIsOn
-//                    yellowLight.alpha = lightIsOff
-//                    currentLight = .red
-//                }
+//
+//            switch currentLight {
+//            case .red:
+//                greenLight.alpha = lightIsOff
+//                redLight.alpha = lightIsOn
+//                currentLight = .yellow
+//            case .yellow:
+//                redLight.alpha = lightIsOff
+//                yellowLight.alpha = lightIsOn
+//                currentLight = .green
+//            case .green:
+//                greenLight.alpha = lightIsOn
+//                yellowLight.alpha = lightIsOff
+//                currentLight = .red
 //            }
-//
+//        }
+    }
+            
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
