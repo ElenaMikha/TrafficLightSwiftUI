@@ -7,58 +7,60 @@
 
 import SwiftUI
 
+enum CurrentLight {
+    case red, yellow, green
+}
 struct ContentView: View {
-    private let lightIsOn = 1
-    private let lightIsOff = 0.3
     
-    enum CurrentLight {
-        case red, yellow, green
-    }
+    @State private var buttonTitle = "START"
+    
+    @State private var redlightState = 0.3
+    @State private var yellowlightState = 0.3
+    @State private var greenlightState = 0.3
+    
     @State var currentLight = CurrentLight.red
     
-    var body: some View {
+    private func nextColor() {
+        let lightIsOn = 1.0
+        let lightIsOff = 0.3
         
-        ZStack{
-            Color.black
-                .edgesIgnoringSafeArea(.all)
-            VStack{
-                VStack {
-                    Circle()
-                        .foregroundColor(.red)
-                        .opacity(lightIsOff)
-                        .frame(width: 150, height: 150)
-                        .overlay(Circle().stroke(Color.white, lineWidth: 4))
-                    
-                    Circle()
-                        .foregroundColor(.yellow)
-                        .opacity(lightIsOff)
-                        .frame(width: 150, height: 150)
-                        .overlay(Circle().stroke(Color.white, lineWidth: 4))
-                        .padding(10)
-                    Circle()
-                        .foregroundColor(.green)
-                        .opacity(lightIsOff)
-                        .frame(width: 150, height: 150)
-                        .overlay(Circle().stroke(Color.white, lineWidth: 4))
-                }
-                .padding()
+        switch currentLight {
+        case .red:
+            greenlightState = lightIsOff
+            redlightState = lightIsOn
+            currentLight = .yellow
+        case .yellow:
+            redlightState = lightIsOff
+            yellowlightState = lightIsOn
+            currentLight = .green
+        case .green:
+            greenlightState = lightIsOn
+            yellowlightState = lightIsOff
+            currentLight = .red
+        }
+        
+    }
+}
+extension ContentView {
+    var body: some View {
+        ZStack {
+            Color(.black)
+                .ignoresSafeArea()
+            VStack(spacing: 20){
+                ColorCircleView(color: .red, opacity: redlightState)
+                ColorCircleView(color: .yellow, opacity: yellowlightState)
+                ColorCircleView(color: .green, opacity: greenlightState)
+                
                 Spacer()
                 
-                Button(action: {} ) {
-                    Text("START")
-                        .font(.title)
-                        .foregroundColor(.white)
-                        .padding(.horizontal, 20)
-                        .padding()
-                        .background(
-                            Color
-                                .blue
-                                .cornerRadius(15)
-                        )
-                        .overlay(RoundedRectangle(cornerRadius: 15).stroke(Color.white, lineWidth: 4))
-                    
+                StartButtonView(title: buttonTitle) {
+                    if buttonTitle == "START" {
+                        buttonTitle = "NEXT"
+                    }
+                    nextColor()
                 }
             }
+            .padding()
         }
     }
 }
